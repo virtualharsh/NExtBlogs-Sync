@@ -45,3 +45,19 @@ To create everything nested
 ```bash
 nest g resource module_name/module_name
 ```
+
+NEST REQUEST FLOW
+
+```
+Client Request
+     ↓
+Middleware (logging | authCheck)
+     ↓
+Pipes (DTO validation | Req variable trim)
+     ↓
+Controller (Routes)
+     ↓
+Service (logic)
+     ↓
+Response / Interceptor
+```
