@@ -21,7 +21,7 @@ export class Login {
   password!: string;
 
   @Column()
-  auth_token!: string;
+  refresh_token!: string;
 
   @Column('boolean', { default: true })
   status!: boolean;
