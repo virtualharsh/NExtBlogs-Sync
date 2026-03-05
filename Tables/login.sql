@@ -1,7 +1,7 @@
 CREATE TABLE login (
     id INT UNSIGNED AUTO_INCREMENT,
     email VARCHAR(255) NOT NULL,
-    username VARCHAR(100) NOT NULL,
+    username VARCHAR(100),
     password VARCHAR(255) NOT NULL,
     role VARCHAR(50) DEFAULT 'user',
     auth_token VARCHAR(255),
@@ -11,5 +11,4 @@ CREATE TABLE login (
 
     PRIMARY KEY (id),
     UNIQUE KEY unique_email (email),
-    UNIQUE KEY unique_username (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
