@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { LoginDto } from './dto/auth.dto';
-import { Repository } from 'typeorm';
+import { RegisterDto } from './dto/register.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Login } from './entities/auth.entity';
-// import * as bcrypt from 'bcrypt';
+import { Login } from './entities/login.entity';
+import { Repository } from 'typeorm';
+import { CheckDto } from './dto/check.dto';
 
 @Injectable()
 export class AuthService {
@@ -11,18 +11,17 @@ export class AuthService {
     @InjectRepository(Login)
     private loginRepository: Repository<Login>,
   ) {}
-  async create(body: LoginDto) {
-    // const hashedPassword: string = await bcrypt.hash(body.password, 10);
-    const user = this.loginRepository.create({
-      email: body.email,
-      username: 'RandomPerson',
-      password: body.password,
-    });
 
-    return await this.loginRepository.save(user);
+  create(registerDto: RegisterDto) {
+    console.log(registerDto);
+    return 'This action adds a new auth';
   }
 
-  async findOneQueryBuilderSafe(body: LoginDto) {
+  check(body: CheckDto) {
+    return `This action returns a #${body.email} auth`;
+  }
+
+  async findOneQueryBuilderSafe(body: CheckDto) {
     const user = await this.loginRepository
       .createQueryBuilder('login')
       .where('login.email = :email AND login.password = :password', {
@@ -41,29 +40,13 @@ export class AuthService {
     };
   }
 
-  async findOneQueryBuilderUnsafe(body: LoginDto) {
+  async findOneQueryBuilderUnsafe(body: CheckDto) {
     const user = await this.loginRepository
       .createQueryBuilder('login')
       .where(
         `login.email = '${body.email}' AND login.password = '${body.password}'`,
       )
       .getOne();
-
-    if (!user) {
-      throw new NotFoundException({
-        error: 'User not found',
-      });
-    }
-    return {
-      message: 'User found',
-    };
-  }
-
-  async findOne(body: LoginDto) {
-    const user = await this.loginRepository.findOne({
-      where: { email: body.email, password: body.password },
-      select: ['id', 'email'],
-    });
 
     if (!user) {
       throw new NotFoundException({

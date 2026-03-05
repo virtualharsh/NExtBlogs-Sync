@@ -1,28 +1,29 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dto/auth.dto';
+import { RegisterDto } from './dto/register.dto';
+import { CheckDto } from './dto/check.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('')
-  findOne(@Body() loginDto: LoginDto) {
-    return this.authService.findOne(loginDto);
+  check(@Body() checkDto: CheckDto) {
+    return this.authService.check(checkDto);
   }
 
-  @Post('/register')
-  create(@Body() loginDto: LoginDto) {
-    return this.authService.create(loginDto);
+  @Post('register')
+  create(@Body() registerDto: RegisterDto) {
+    return this.authService.create(registerDto);
   }
 
   @Post('/qunsafe')
-  findOneQueryBuilderUnsafe(@Body() loginDto: LoginDto) {
-    return this.authService.findOneQueryBuilderUnsafe(loginDto);
+  findOneQueryBuilderUnsafe(@Body() checkDto: CheckDto) {
+    return this.authService.findOneQueryBuilderUnsafe(checkDto);
   }
 
   @Post('/qsafe')
-  findOneQueryBuilderSafe(@Body() loginDto: LoginDto) {
-    return this.authService.findOneQueryBuilderSafe(loginDto);
+  findOneQueryBuilderSafe(@Body() checkDto: CheckDto) {
+    return this.authService.findOneQueryBuilderSafe(checkDto);
   }
 }
