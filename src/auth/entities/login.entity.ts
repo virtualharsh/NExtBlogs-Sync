@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Entity,
   Column,
@@ -8,27 +9,35 @@ import {
 
 @Entity()
 export class Login {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   user_id!: number;
 
+  @ApiProperty({ example: 'test@gmail.com' })
   @Column('varchar', { length: 50, unique: true })
   email!: string;
 
-  @Column('varchar', { length: 25, nullable: false })
+  @ApiProperty({ example: 'harsh_sonegra' })
+  @Column('varchar', { length: 25, unique: true, nullable: true, default: '' })
   username!: string;
 
-  @Column('varchar', { length: 25, nullable: false })
+  @ApiProperty({ example: 'hashedpassword' })
+  @Column('varchar', { length: 255 })
   password!: string;
 
-  @Column()
+  @ApiProperty({ example: 'jwt-refresh-token' })
+  @Column({ default: '' })
   refresh_token!: string;
 
+  @ApiProperty({ example: true })
   @Column('boolean', { default: true })
   status!: boolean;
 
+  @ApiProperty()
   @CreateDateColumn()
   created_at!: Date;
 
+  @ApiProperty()
   @UpdateDateColumn()
   modified_at!: Date;
 }

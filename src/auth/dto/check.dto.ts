@@ -1,6 +1,10 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { ApiProperty } from '@nestjs/swagger';
 import { RegisterDto } from './register.dto';
 
-export class CheckDto extends PartialType(RegisterDto) {
-  username!: string | null | undefined;
+export class CheckDto extends RegisterDto {
+  @ApiProperty({
+    example: 'harsh_sonegra',
+    description: 'Username of the user',
+  })
+  username!: string;
 }
