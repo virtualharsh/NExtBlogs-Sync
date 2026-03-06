@@ -10,11 +10,11 @@ export class CookieService {
   ACCESS TOKEN
   */
 
-  setAccessTokenCookie(res: Response, payload: any) {
+  setAccessTokenCookie(res: Response, payload: { user_id: number }) {
     const token = this.jwtService.sign(payload, {
       secret: process.env.JWT_ACCESS_SECRET || 'access_secret',
       expiresIn: '1d',
-    });
+    }) as string;
 
     res.cookie('access_token', token, {
       httpOnly: true,
@@ -80,5 +80,23 @@ export class CookieService {
 
   clearRefreshTokenCookie(res: Response) {
     res.clearCookie('refresh_token');
+  }
+
+  setAccessAndRefreshToken(res: Response, payload: { user_id: number }) {
+    this.setAccessTokenCookie(res, payload);
+    this.setRefreshTokenCookie(res, payload);
+    return {
+      message: 'Cookie set',
+      status: true,
+    };
+  }
+
+  clearAccessAndRefreshToken(res: Response) {
+    this.clearRefreshTokenCookie(res);
+    this.clearAccessTokenCookie(res);
+    return {
+      message: 'Cookie cleared',
+      status: true,
+    };
   }
 }

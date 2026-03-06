@@ -33,6 +33,8 @@ export class AuthService {
       if (res) {
         return {
           message: 'User created successfully',
+          created: true,
+          statusCode: 201,
         };
       }
     } catch (error) {
@@ -48,7 +50,7 @@ export class AuthService {
     try {
       const user = await this.loginRepository
         .createQueryBuilder('login')
-        .select(['login.user_id', 'login.password'])
+        .select(['login.user_id', 'login.password','login.username'])
         .where('login.email=:email', { email: body.email })
         .orWhere('login.username=:username', { username: body.username })
         .getOne();
@@ -64,17 +66,13 @@ export class AuthService {
       if (!isPasswordValid) {
         throw new UnauthorizedException('Invalid credentials');
       }
-      // TODO: Set cookie
-      console.log(user.user_id);
 
-      this.cookieService.setAccessTokenCookie(response, {
-        user_id: user.user_id,
-      });
-      this.cookieService.setRefreshTokenCookie(response, {
+      this.cookieService.setAccessAndRefreshToken(response, {
         user_id: user.user_id,
       });
       return {
         message: 'Login successful',
+        username: user.username==="" ? "LifeSailor" : user.username,
       };
     } catch (error) {
       throw error;
@@ -96,7 +94,7 @@ export class AuthService {
       });
     }
     return {
-      message: 'User found',
+      message: 'Login successful',
     };
   }
 

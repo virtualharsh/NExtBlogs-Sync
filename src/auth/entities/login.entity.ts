@@ -25,10 +25,6 @@ export class Login {
   @Column('varchar', { length: 255 })
   password!: string;
 
-  @ApiProperty({ example: 'jwt-refresh-token' })
-  @Column({ default: '' })
-  refresh_token!: string;
-
   @ApiProperty({ example: true })
   @Column('boolean', { default: true })
   status!: boolean;
