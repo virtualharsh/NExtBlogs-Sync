@@ -1,9 +1,17 @@
-import { Controller, Post, Body, Res } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Res,
+  Patch,
+  Req,
+  Delete,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { CheckDto } from './dto/check.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
-import type { Response } from 'express';
+import type { Response, Request } from 'express';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -27,6 +35,26 @@ export class AuthController {
   @ApiResponse({ status: 201, description: 'User registered successfully' })
   create(@Body() registerDto: RegisterDto) {
     return this.authService.create(registerDto);
+  }
+
+  @Patch('disable')
+  @ApiOperation({ summary: 'Disable existing account' })
+  @ApiResponse({ status: 201, description: 'User disabled' })
+  disableAccount(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    return this.authService.disableAccount(req, res);
+  }
+
+  @Delete('delete')
+  @ApiOperation({ summary: 'Delete existing account' })
+  @ApiResponse({ status: 201, description: 'User deleted' })
+  deleteAccount(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    return this.authService.disableAccount(req, res, true);
   }
 
   @Post('/qunsafe')

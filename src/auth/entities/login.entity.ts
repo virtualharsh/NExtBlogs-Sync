@@ -18,7 +18,7 @@ export class Login {
   email!: string;
 
   @ApiProperty({ example: 'harsh_sonegra' })
-  @Column('varchar', { length: 25, unique: true, nullable: true, default: '' })
+  @Column('varchar', { length: 25, nullable: true, default: '' })
   username!: string;
 
   @ApiProperty({ example: 'hashedpassword' })

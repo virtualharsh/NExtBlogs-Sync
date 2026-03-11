@@ -24,7 +24,7 @@ export class CookieService {
     });
   }
 
-  validateAccessToken(req: Request) {
+  validateAccessToken(req: Request) {    
     const token = req.cookies?.access_token;
 
     if (!token) {

@@ -21,5 +21,6 @@ async function bootstrap() {
 
   await app.listen(4001);
   console.log(`🚀 Server running on http://localhost:4001`);
+  console.log(`🚀 API DOCS ON http://localhost:4001/api-docs`);
 }
 bootstrap();

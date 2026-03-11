@@ -15,7 +15,6 @@ export class AppService {
 
   async healthCheck() {
     try {
-      // Check database connection
       await this.dataSource.query('SELECT 1');
       return {
         status: 'success',
